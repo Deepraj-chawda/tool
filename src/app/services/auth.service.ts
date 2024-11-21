@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -24,9 +24,11 @@ export class AuthService {
       positionClass: 'toast-top-center'
     });
 
-    const data = { email: email, password: password };
+    let data = new HttpParams();
+    data = data.set('email',email);
+    data = data.set('password', password);
 
-    return this.http.post(authEndpoints.LOGIN_API, data).pipe(
+    return this.http.post(authEndpoints.LOGIN_API+ `?email=${email}&password=${password}`, data ).pipe(
       catchError((error) => {
       if (loadingToast) {
         this.toastr.clear();
