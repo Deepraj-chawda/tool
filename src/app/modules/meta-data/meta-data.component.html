@@ -1,3 +1,10 @@
+<div><!-- File Input -->
+  <input type="file" (change)="onFileSelected($event)" accept="image/*" multiple />
+  <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+
+</div>
+
+
 <div class="container-fluid" style="height: calc(100vh - 57px);">
   <div class="row d-flex justify-content-between" style="height: 100%;">
     <!-- Left Sidebar: Thumbnails -->
@@ -15,15 +22,18 @@
 
     <!-- Main Image Viewer -->
     <div class="col-10 bg-light p-2 d-flex flex-row gap-2 align-items-start" style="height: 100%; overflow: hidden;">
+      
+      
+
       <!-- Main Image Container -->
       <div class="d-flex justify-content-center align-items-center" style="width: 65%; height: 100%;">
         <img
-          [src]="selectedImage"
+          [src]="images[selectedIndex]"
           alt="Selected Image"
           class="main-image shadow-sm"
-          *ngIf="selectedImage"
+          *ngIf="images[selectedIndex]"
         />
-        <p *ngIf="!selectedImage" class="text-muted">Select an image to preview</p>
+        <p *ngIf="selectedIndex=== null" class="text-muted">Select an image to preview</p>
       </div>
 
       <!-- Right Panel: Metadata -->
