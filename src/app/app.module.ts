@@ -9,12 +9,15 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './modules/AuthModules/login/login/login.component';
 import { NavbarComponent } from './modules/SharedModules/navbar/navbar.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { MetaDataComponent } from './modules/meta-data/meta-data.component';
+import { LightboxModule } from 'ngx-lightbox';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    NavbarComponent
+    NavbarComponent,
+    MetaDataComponent
   ],
   imports: [
     BrowserModule,
@@ -24,6 +27,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
+    LightboxModule
   ],
   providers: [
     provideAnimationsAsync()

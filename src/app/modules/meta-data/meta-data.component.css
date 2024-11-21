@@ -1,0 +1,102 @@
+.thumbnail-sidebar {
+  background-color: #666;
+  padding: 5px;
+  overflow-y: auto;
+  max-width: 100%;
+  scrollbar-width: thin;
+  scrollbar-color: #f3efef transparent;
+}
+
+.thumbnail-sidebar::-webkit-scrollbar {
+  width: 1px;
+}
+
+.thumbnail-sidebar::-webkit-scrollbar-thumb {
+  background-color: #b0b0b0;
+  border-radius: 1px;
+}
+
+.thumbnail-sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.thumbnail {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 5px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.thumbnail img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.thumbnail:hover {
+  transform: scale(1.03);
+}
+
+.thumbnail.selected {
+  transform: scale(1.05);
+}
+
+@media (max-height: 768px) {
+  .thumbnail {
+    margin-bottom: 8px;
+  }
+}
+
+
+.bg-light {
+  background-color: #f4f6f981;
+}
+
+.main-image {
+  width: 100%;
+  height: auto;
+  max-height: 100%;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+
+h5 {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #333;
+}
+
+strong {
+  font-weight: 600;
+  color: #555;
+}
+
+
+.shadow-sm {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.ms-3 {
+  margin-left: 1rem;
+}
+
+.rounded {
+  border-radius: 10px;
+}
+
+@media (max-width: 767px) {
+
+  .col-md-7,
+  .col-md-4 {
+    width: 100%;
+  }
+
+  .ms-3 {
+    margin-left: 0;
+  }
+}

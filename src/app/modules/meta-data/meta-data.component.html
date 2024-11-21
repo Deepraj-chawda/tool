@@ -1,0 +1,43 @@
+<div class="container-fluid" style="height: calc(100vh - 57px);">
+  <div class="row d-flex justify-content-between" style="height: 100%;">
+    <!-- Left Sidebar: Thumbnails -->
+    <div class="col-md-2 thumbnail-sidebar bg-light-subtle p-2 overflow-y-auto d-flex flex-column align-items-center"
+         style="max-height: 100%; height: 100%; overflow-y: auto;">
+      <div
+        *ngFor="let image of images; let i = index"
+        class="thumbnail mb-3"
+        [class.selected]="i === selectedIndex"
+        (click)="selectImage(i)"
+      >
+        <img [src]="image" alt="Thumbnail" class="img-thumbnail" />
+      </div>
+    </div>
+
+    <!-- Main Image Viewer -->
+    <div class="col-10 bg-light p-2 d-flex flex-row gap-2 align-items-start" style="height: 100%; overflow: hidden;">
+      <!-- Main Image Container -->
+      <div class="d-flex justify-content-center align-items-center" style="width: 65%; height: 100%;">
+        <img
+          [src]="selectedImage"
+          alt="Selected Image"
+          class="main-image shadow-sm"
+          *ngIf="selectedImage"
+        />
+        <p *ngIf="!selectedImage" class="text-muted">Select an image to preview</p>
+      </div>
+
+      <!-- Right Panel: Metadata -->
+      <div class="bg-white p-2 rounded shadow-sm ms-3" style="width: 35%; height: 100%; overflow: hidden;">
+        <h5 class="mb-4">Image Details</h5>
+        <div *ngIf="details; else noDetails">
+          <div *ngFor="let detail of details | keyvalue" class="mb-3">
+            <strong>{{ detail.key }}</strong>: {{ detail.value }}
+          </div>
+        </div>
+        <ng-template #noDetails>
+          <p class="text-muted">No details available</p>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>
