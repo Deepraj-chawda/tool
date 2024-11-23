@@ -18,6 +18,7 @@ export class MetaDataComponent {
   exifData: any = null;
   errorMessage: string = '';
   isLoading: boolean = false;
+  headerData: any = null;
 
   selectedIndex: number | null = null; // Track selected image index
   details: { [key: string]: string } | null = null;
@@ -43,8 +44,8 @@ export class MetaDataComponent {
   // Image selection handler
   selectImage(index: number): void {
     this.selectedIndex = index;
-    this.details = { Name: `Image ${index + 1}`, Description: `Details of image ${index + 1}` };
-    this.exifData = null;
+    //this.details = { Name: `Image ${index + 1}`, Description: `Details of image ${index + 1}` };
+    this.exifData = null; // Clear EXIF data when switching images
 
     // Call the EXIF API for the newly selected image
     this.uploadAndExtractExif(this.selectedFiles[index]);
@@ -67,10 +68,27 @@ export class MetaDataComponent {
       (response) => {
         this.exifData = response;
         console.log(this.exifData);
+        this.extractDetails(this.exifData);
         this.toastr.success('EXIF data extracted successfully!');
       },
       (error) => {
         this.errorMessage = 'Failed to extract EXIF data. Please try again.';
+        this.toastr.error(this.errorMessage);
+      },
+      () => {
+        this.isLoading = false; // Reset loading state
+      }
+    );
+
+    this.metaService.extractHeader(selectedFile, token).subscribe(
+      (response) => {
+        this.headerData = response;
+        console.log(this.headerData);
+
+        this.toastr.success('Header Structure data extracted successfully!');
+      },
+      (error) => {
+        this.errorMessage = 'Failed to extract Header Structure data. Please try again.';
         this.toastr.error(this.errorMessage);
       },
       () => {
@@ -90,4 +108,35 @@ export class MetaDataComponent {
     // Call the EXIF extraction when explicitly clicking upload
     this.uploadAndExtractExif(this.selectedFiles[this.selectedIndex]);
   }
+
+
+  extractDetails(exifResponse: any): void {
+  // Initialize default values
+  let createDate = 'N/A';
+  let modifyDate = 'N/A';
+  let software = 'N/A';
+
+  // Helper function to search for a key in a section
+  const findKeyInSection = (section: any[], key: string): string | null => {
+    const entry = section.find(([entryKey]: [string]) => entryKey === key);
+    return entry ? entry[1] : null;
+  };
+
+  // Iterate over all groups in the response
+  for (const groupName in exifResponse) {
+    const section = exifResponse[groupName];
+    if (Array.isArray(section)) {
+      if (createDate === 'N/A') createDate = findKeyInSection(section, 'FileCreateDate') || createDate;
+      if (modifyDate === 'N/A') modifyDate = findKeyInSection(section, 'ModifyDate') || modifyDate;
+      if (software === 'N/A') software = findKeyInSection(section, 'Software') || software;
+    }
+  }
+
+  // Update the details object
+  this.details = {
+    CreateDate: createDate,
+    ModifyDate: modifyDate,
+    Software: software,
+  };
+}
 }
