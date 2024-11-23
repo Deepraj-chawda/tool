@@ -31,17 +31,27 @@ export class MetadataService {
     console.log(file)
    
     return this.http.post(MetadataEndpoints.EXIF_API, formData, this.setToken(token) ).pipe(
-      catchError(this.handleError) // Catch and handle errors
+      catchError((error) => this.handleError(error, 'EXIF')) // Catch and handle errors
+    );
+  }
+
+  extractHeader(file: File, token: string): Observable<any> {
+    const formData = new FormData();
+    formData.append('image', file);
+
+
+    return this.http.post<any>(MetadataEndpoints.HEADER_API, formData, this.setToken(token)).pipe(
+      catchError((error) => this.handleError(error, 'Header Structure'))
     );
   }
 
    // Error handler
-   private handleError(error: HttpErrorResponse): Observable<never> {
+   private handleError(error: HttpErrorResponse,msg: string): Observable<never> {
     console.error('API Error:', error);
     if (error.status === 401) {
       return throwError('Unauthorized: Your session may have expired. Please log in again.');
     } else if (error.status === 404) {
-      return throwError('No EXIF data found in the uploaded image.');
+      return throwError(`No ${msg} data found in the uploaded image.`);
     } else if (error.status === 500) {
       return throwError('Internal Server Error: Something went wrong on the server.');
     } else {
