@@ -33,18 +33,18 @@ export class MetaDataComponent {
       return;
     }
 
-    this.selectedFiles = validFiles; // Store valid files
-    this.images = validFiles.map((file) => URL.createObjectURL(file)); // Generate preview URLs
+    this.selectedFiles = validFiles;
+    this.images = validFiles.map((file) => URL.createObjectURL(file));
     this.errorMessage = '';
-    this.selectedIndex = 0; // Automatically select the first image
-    this.selectImage(0); // Load details for the first image
+    this.selectedIndex = 0;
+    this.selectImage(0);
   }
 
   // Image selection handler
   selectImage(index: number): void {
     this.selectedIndex = index;
     this.details = { Name: `Image ${index + 1}`, Description: `Details of image ${index + 1}` };
-    this.exifData = null; // Clear EXIF data when switching images
+    this.exifData = null;
 
     // Call the EXIF API for the newly selected image
     this.uploadAndExtractExif(this.selectedFiles[index]);
