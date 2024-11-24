@@ -31,7 +31,7 @@ export class MetadataService {
     console.log(file)
    
     return this.http.post(MetadataEndpoints.EXIF_API, formData, this.setToken(token) ).pipe(
-      catchError((error) => this.handleError(error, 'EXIF')) // Catch and handle errors
+      catchError((error) => this.handleError(error, 'Metadata')) // Catch and handle errors
     );
   }
 
@@ -41,7 +41,7 @@ export class MetadataService {
 
 
     return this.http.post<any>(MetadataEndpoints.HEADER_API, formData, this.setToken(token)).pipe(
-      catchError((error) => this.handleError(error, 'Header Structure'))
+      catchError((error) => this.handleError(error, 'Advance MetaData'))
     );
   }
 

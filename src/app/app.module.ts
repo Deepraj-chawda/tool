@@ -26,7 +26,11 @@ import { UploadModalComponent } from './modules/upload-modal/upload-modal.compon
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot(
+      {closeButton:true,
+        timeOut:2000
+      }
+    ),
     BrowserAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule,

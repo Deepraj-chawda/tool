@@ -74,10 +74,10 @@ export class MetaDataComponent {
         this.exifData = response;
         console.log(this.exifData);
         this.extractDetails(this.exifData);
-        this.toastr.success('EXIF data extracted successfully!');
+        this.toastr.success('Metadata extracted successfully!');
       },
       (error) => {
-        this.errorMessage = 'Failed to extract EXIF data. Please try again.';
+        this.errorMessage = 'Failed to extract Metadata. Please try again.';
         this.toastr.error(this.errorMessage);
       },
       () => {
@@ -90,10 +90,10 @@ export class MetaDataComponent {
         this.headerData = response;
         console.log(this.headerData);
 
-        this.toastr.success('Header Structure data extracted successfully!');
+        this.toastr.success('Advance Metadata extracted successfully!');
       },
       (error) => {
-        this.errorMessage = 'Failed to extract Header Structure data. Please try again.';
+        this.errorMessage = 'Failed to extract Advance Metadata. Please try again.';
         this.toastr.error(this.errorMessage);
       },
       () => {
@@ -120,6 +120,10 @@ export class MetaDataComponent {
   let createDate = 'N/A';
   let modifyDate = 'N/A';
   let software = 'N/A';
+  let FilecreateDate = 'N/A';
+  let datecreate = 'N/A';
+  let createDateKey = 'CreateDate';
+  let oddEntries: { [key: string]: string } = {}; // To store "(odd)" keys and values
 
   // Helper function to search for a key in a section
   const findKeyInSection = (section: any[], key: string): string | null => {
@@ -131,17 +135,36 @@ export class MetaDataComponent {
   for (const groupName in exifResponse) {
     const section = exifResponse[groupName];
     if (Array.isArray(section)) {
-      if (createDate === 'N/A') createDate = findKeyInSection(section, 'FileCreateDate') || createDate;
+      if (createDate === 'N/A') createDate = findKeyInSection(section, 'CreateDate') || createDate;
       if (modifyDate === 'N/A') modifyDate = findKeyInSection(section, 'ModifyDate') || modifyDate;
       if (software === 'N/A') software = findKeyInSection(section, 'Software') || software;
+      if (FilecreateDate === 'N/A') FilecreateDate = findKeyInSection(section, 'FileCreateDate') || FilecreateDate;
+      if (datecreate === 'N/A') datecreate = findKeyInSection(section, 'Datecreate') || datecreate;
+    
+    // Look for keys containing "(odd)" and store them
+    section.forEach(([key, value]: [string, string]) => {
+      if (key.includes('(odd)')) {
+        oddEntries[key] = value;
+      }
+    });
+
     }
+  }
+
+  if (createDate !== 'N/A' || datecreate !== 'N/A') {
+    createDate = createDate !== 'N/A' ? createDate : datecreate;
+    createDateKey = 'CreateDate';
+  } else if (FilecreateDate !== 'N/A') {
+    createDate = FilecreateDate;
+    createDateKey = 'FileCreate Date';
   }
 
   // Update the details object
   this.details = {
-    CreateDate: createDate,
+    [createDateKey]: createDate,
     ModifyDate: modifyDate,
     Software: software,
+    ...oddEntries,
   };
 }
 
