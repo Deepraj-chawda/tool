@@ -11,13 +11,17 @@ import { NavbarComponent } from './modules/SharedModules/navbar/navbar.component
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MetaDataComponent } from './modules/meta-data/meta-data.component';
 import { LightboxModule } from 'ngx-lightbox';
+import { NoDataComponent } from './modules/no-data/no-data.component';
+import { UploadModalComponent } from './modules/upload-modal/upload-modal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     NavbarComponent,
-    MetaDataComponent
+    MetaDataComponent,
+    NoDataComponent,
+    UploadModalComponent
   ],
   imports: [
     BrowserModule,

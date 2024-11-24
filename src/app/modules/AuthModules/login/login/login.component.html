@@ -1,11 +1,11 @@
 <div class="container d-flex justify-content-center align-items-center" style="height: 90vh;">
-  <div class="form-container mt-5" style="width: 550px;">
-    <h4 class="text-center fw-bold fs-4">Welcome Back!</h4>
-    <p class="text-center mt-0 mb-3">Login to your account</p>
-    <form [formGroup]="signinForm" (ngSubmit)="onSubmit()" >
+  <div class="form-container mt-5">
+    <h4 class="text-center fw-bold fs-3 text-primary">Welcome Back!</h4>
+    <p class="text-center mt-1 mb-4 text-muted">Login to your account</p>
+    <form [formGroup]="signinForm" (ngSubmit)="onSubmit()">
       <!-- Email input -->
       <div class="input-group mb-4">
-        <span class="input-group-text" id="email-addon">
+        <span class="input-group-text bg-primary text-white">
           <i class="bi bi-envelope"></i>
         </span>
         <input
@@ -22,7 +22,7 @@
 
       <!-- Password input with icon -->
       <div class="input-group mb-4">
-        <span class="input-group-text" id="password-addon">
+        <span class="input-group-text bg-primary text-white">
           <i class="bi bi-lock"></i>
         </span>
         <input
@@ -38,25 +38,30 @@
       </div>
 
       <!-- 2 column grid layout -->
-      <div class="row mb-4 w-100 d-flex flex-row">
-        <div class="d-flex align-items-center gap-2 w-50">
-          <div class="form-check mb-3 mb-md-0">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              id="loginCheck"
-              formControlName="rememberMe"
-            />
-            <label class="form-check-label" for="loginCheck"> Remember me </label>
-          </div>
+      <div class="row mb-4 w-100 d-flex align-items-center">
+        <div class="form-check col-6">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="loginCheck"
+            formControlName="rememberMe"
+          />
+          <label class="form-check-label text-muted" for="loginCheck"> Remember me </label>
         </div>
 
-        <div class="w-50 d-flex justify-content-end">
-          <a href="#!">Forgot password?</a>
+        <div class="col-6 text-end">
+          <a href="#!" class="text-primary text-decoration-none">Forgot password?</a>
         </div>
       </div>
 
-      <button type="submit" class="btn btn-primary btn-block mb-4 w-100">Sign in</button>
+      <button type="submit" class="btn btn-primary btn-block mb-3 w-100 py-2">
+        Sign in
+      </button>
     </form>
+    <div class="text-center">
+      <p class="text-muted mb-0">Don't have an account?
+        <a href="#!" class="text-primary text-decoration-none fw-bold">Sign up</a>
+      </p>
+    </div>
   </div>
 </div>

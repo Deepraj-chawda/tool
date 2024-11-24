@@ -4,7 +4,7 @@ import { LoginComponent } from './modules/AuthModules/login/login/login.componen
 import { MetaDataComponent } from './modules/meta-data/meta-data.component';
 
 const routes: Routes = [
-  {path:"" , component: MetaDataComponent},
+  {path:"" , component: LoginComponent},
   {path: "login", component: LoginComponent},
   {path: "metadata", component: MetaDataComponent},
 ];

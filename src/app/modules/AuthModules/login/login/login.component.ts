@@ -39,7 +39,7 @@ export class LoginComponent {
           localStorage.setItem('user', JSON.stringify(res))
 
           this.toastr.success("Login success");
-          this.router.navigate(['/']);
+          this.router.navigate(['/metadata']);
         },
         error: (err) => {
           this.toastr.error("Invalid credentials");

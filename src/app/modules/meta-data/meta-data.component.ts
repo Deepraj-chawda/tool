@@ -49,6 +49,10 @@ export class MetaDataComponent {
 
     // Call the EXIF API for the newly selected image
     this.uploadAndExtractExif(this.selectedFiles[index]);
+    // if(this.openUploadModal) {
+    //   const uploadModal = new bootstrap.Modal(document.getElementById('uploadModal')!);
+    //   uploadModal.hide();
+    // }
   }
 
   // Upload and call the API for the selected image
@@ -64,6 +68,7 @@ export class MetaDataComponent {
     }
 
     this.isLoading = true; // Set loading state
+    this.closeUploadModal();
     this.metaService.extractExif(selectedFile, token).subscribe(
       (response) => {
         this.exifData = response;
@@ -76,7 +81,7 @@ export class MetaDataComponent {
         this.toastr.error(this.errorMessage);
       },
       () => {
-        this.isLoading = false; // Reset loading state
+        this.isLoading = false;
       }
     );
 
@@ -139,4 +144,60 @@ export class MetaDataComponent {
     Software: software,
   };
 }
+
+openUploadModal() {
+  const uploadModal = new bootstrap.Modal(document.getElementById('uploadModal')!);
+  uploadModal.show();
+}
+
+closeUploadModal() {
+  const modalElement = document.getElementById('uploadModal');
+  if (modalElement) {
+    const modalInstance = bootstrap.Modal.getInstance(modalElement);
+    modalInstance?.hide();
+  }
+}
+
+
+onFileSelect(event: any) {
+  const files = Array.from(event.target.files) as File[];
+    const validFiles = files.filter((file) => file.type.startsWith('image/'));
+
+    if (validFiles.length === 0) {
+      this.errorMessage = 'No valid image files selected.';
+      this.toastr.error(this.errorMessage);
+      return;
+    }
+
+    this.selectedFiles = validFiles;
+    this.images = validFiles.map((file) => URL.createObjectURL(file));
+    this.errorMessage = '';
+    this.selectedIndex = 0;
+}
+// Triggered when a file is dropped
+onFileDrop(event: DragEvent) {
+  event.preventDefault();
+
+  // Use event.dataTransfer for drag-and-drop files
+  const files = Array.from(event.dataTransfer?.files || []) as File[];
+
+  const validFiles = files.filter((file) => file.type.startsWith('image/'));
+
+  if (validFiles.length === 0) {
+    this.errorMessage = 'No valid image files selected.';
+    this.toastr.error(this.errorMessage);
+    return;
+  }
+
+  this.selectedFiles = validFiles;
+  this.images = validFiles.map((file) => URL.createObjectURL(file));
+  this.errorMessage = '';
+  this.selectedIndex = 0;
+}
+
+// Prevents default behavior on dragover
+onDragOver(event: DragEvent) {
+  event.preventDefault();
+}
+
 }

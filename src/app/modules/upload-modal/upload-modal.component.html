@@ -1,0 +1,79 @@
+<div class="container d-flex flex-column align-items-center height">
+  <div class="text-center mb-2 mt-5">
+    <h2 class="text-primary">Comprehensive Feedback Summarizer</h2>
+    <p class="text-muted">
+      Upload your CSV file to generate summarized feedback across multiple
+      entries. Use the summarization feature to efficiently review and analyze
+      feedback data.
+    </p>
+    <hr class="w-50 mx-auto my-3" />
+  </div>
+
+  <div class="d-flex justify-content-center align-items-center w-100">
+    <div
+      class="batch-summarization text-center mb-2"
+      style="min-width: 80%; min-height: 500px"
+    >
+      <div
+        style="min-height: 380px"
+        *ngIf="!isLoading && !isSummarized"
+        class="file-upload-area mb-4 d-flex justify-content-center align-items-center"
+        (click)="fileInput.click()"
+        (drop)="onFileDrop($event)"
+        (dragover)="onDragOver($event)"
+      >
+        <input
+          type="file"
+          class="d-none"
+          #fileInput
+          (change)="onFileSelect($event)"
+        />
+        <div *ngIf="fileName; else defaultText">
+          <i class="fas fa-file-csv fa-3x text-success mb-3"></i>
+          <h5 class="text-muted">{{ fileName }}</h5>
+        </div>
+        <ng-template #defaultText>
+          <i class="fas fa-file-upload fa-3x text-primary mb-3"></i>
+          <h5 class="text-muted">
+            Drag & drop your CSV file here or click to select
+          </h5>
+        </ng-template>
+      </div>
+      <div *ngIf="!isLoading && !isSummarized" class="button-group mt-5 d-flex justify-content-center align-items-center gap-3">
+        <div class="form-group " >
+          <select id="promptSelect" [(ngModel)]="selectedPrompt" name="promptType" class="form-control" required>
+            <option value="" disabled [ngValue]="null">Select a prompt</option>
+            <option *ngFor="let prompt of prompts; let i = index" [ngValue]="i+1">{{ prompt }}</option>
+          </select>
+        </div>
+        <button
+          class="btn btn-success me-2"
+          [disabled]="!fileSelected"
+        >
+          <i class="fas fa-sync-alt me-2"></i> Summarize
+        </button>
+        <button class="btn btn-danger" (click)="clearFile()">
+          <i class="fas fa-trash me-2"></i> Clear
+        </button>
+      </div>
+      <div
+        style="min-height: 470px"
+        *ngIf="isLoading || isSummarized"
+        class="d-flex flex-column justify-content-center align-items-center"
+      >
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Spinner Loading Section -->
+<!-- <div
+*ngIf="isLoading && !isSummarized"
+class=" mb-3 d-flex flex-column justify-content-center align-items-center"
+role="status" style="min-height: 400px;"
+>
+<span  class="loader text-primary"></span>
+</div> -->
+
+

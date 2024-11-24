@@ -1,0 +1,39 @@
+.no-data-page {
+  background-color: #ffffff94;
+  border-radius: 12px;
+  padding: 40px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.no-data-icon {
+  font-size: 7rem;
+  animation: bounce 1.5s infinite ease-in-out;
+}
+
+.animated-icon {
+  color: #dc3545;
+}
+
+.text-muted {
+  font-size: 1.15rem;
+  line-height: 1.6;
+}
+
+.text-danger {
+  color: #c82333 !important;
+}
+
+.height {
+  height: 80vh;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
